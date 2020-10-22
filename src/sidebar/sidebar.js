@@ -5,29 +5,36 @@ import List from "@material-ui/core/List";
 import { Divider, Button } from "@material-ui/core";
 import SidebarItemComponent from "../sidebarItem/sidebarItem";
 
-function SidebarComponent({ notes, classes, selectedNoteIndex }) {
+function SidebarComponent({
+  notes,
+  classes,
+  selectedNoteIndex,
+  selectNote,
+  deleteNote,
+  newNote
+}) {
   const [addingNote, setAddingNote] = useState(false);
   const [title, setTitle] = useState("");
 
   function newNoteBtnClick() {
     setAddingNote(!addingNote);
-    setTitle(null);
+    setTitle("");
     console.log("button clicked");
   }
 
-  const updateTitle = txt => {
+  const updateTitle = (txt) => {
     setTitle(txt);
   };
 
-  const newNote = () => {
+  const newItem = () => {
     console.log(title);
   };
 
-  const selectNote = () => {
-    console.log("select note");
+  const selectItem = (n, i) => {
+    selectNote(n, i);
   };
 
-  const deleteNote = () => {
+  const deleteItem = () => {
     console.log("delete note");
   };
 
@@ -42,9 +49,9 @@ function SidebarComponent({ notes, classes, selectedNoteIndex }) {
             type="text"
             className={classes.newNoteInpute}
             placeholder="Enter note title"
-            onKeyUp={e => updateTitle(e.target.value)}
+            onKeyUp={(e) => updateTitle(e.target.value)}
           />
-          <Button className={classes.newNoteSubmitBtn} onClick={newNote}>
+          <Button className={classes.newNoteSubmitBtn} onClick={newItem}>
             Submit
           </Button>
         </div>
@@ -57,8 +64,10 @@ function SidebarComponent({ notes, classes, selectedNoteIndex }) {
                 note={note}
                 index={index}
                 selectedNoteIndex={selectedNoteIndex}
-                selectNote={selectNote}
+                selectNote={selectItem}
+                deleteNote={deleteItem}
               />
+              <Divider />
             </div>
           );
         })}
